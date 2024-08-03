@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PageAfterLogin from "./PageAfterLogin";
 
 export default function LoginPage({
@@ -9,11 +8,13 @@ export default function LoginPage({
   checkbox, 
   setCheckbox,
   authorized, 
-  handleLogin
+  handleLogin,
+  handleRegistration,
+  userExist
 }) {
   return (
     <>
-    {!authorized ? <><h1>Cупер важная авторизация</h1>
+    {!authorized ? <><h1>Лучший в мире сайт</h1>
     <p>Пожалуйста, авторизуйтесь</p>
     <form onSubmit={handleLogin}>
       <label>
@@ -51,8 +52,11 @@ export default function LoginPage({
       <button type="submit" >
         Войти
       </button>
+      <button onClick={handleRegistration} >
+        Зарегистрироваться
+      </button>
     </form>
-    </> : <PageAfterLogin handleClick={handleLogin}/>}
+    </> : !userExist && <PageAfterLogin handleClick={handleLogin}/>}
   </>
   )
 }

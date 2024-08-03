@@ -1,10 +1,16 @@
-import { useState } from "react"
-
-export default function RegistrationPage({ user, handleUserInput, onRegistrationSubmit, reqistrationSuccess }) {
+export default function RegistrationPage({
+  user, 
+  handleUserInput, 
+  onRegistrationSubmit, 
+  reqistrationSuccess, 
+  handleAfterRegistration
+}) {
   
   return (
     <>
       {!reqistrationSuccess ? (
+        <>
+        <h2>Введите необходимые поля</h2>
         <form onSubmit={onRegistrationSubmit}>
         <label>
           <input
@@ -57,12 +63,12 @@ export default function RegistrationPage({ user, handleUserInput, onRegistration
         </label>
         <br />
         <button type="submit" >
-          Зарегистрироваться
+          Подтвердить регистрацию
         </button>
-      </form>) : (
+      </form></>) : (
         <>
           <h2>Вы успешно создали аккаунт</h2>
-          <button>
+          <button onClick={handleAfterRegistration}>
             Войти
           </button>
         </>)}

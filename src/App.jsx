@@ -12,7 +12,7 @@ function App() {
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
   const [reqistrationSuccess, setReqistrationSuccess] = useState(false)
-  const [userExist, setUserExist] = useState(true)
+  const [userExist, setUserExist] = useState(false)
   
   function handleLogin(e) {
     e.preventDefault()
@@ -34,6 +34,10 @@ function App() {
     }
   }
 
+  function handleRegistration() {
+    setUserExist(!userExist)
+  }
+
   function handleExit() {
     setAuthorized(false)
   }
@@ -52,11 +56,14 @@ function App() {
     setReqistrationSuccess(true)
   }
 
+  function handleAfterRegistration() {
+    setAuthorized(!authorized)
+    setUserExist(!authorized)
+  }
+
   return (
     <>
-      {authorized ? (
-        <PageAfterLogin authorized={authorized} handleExit={handleExit} />
-      ) : userExist ? (
+      {!authorized && !userExist ? (
         <LoginPage 
           email={email} 
           setEmail={setEmail}
@@ -66,17 +73,19 @@ function App() {
           setCheckbox={setCheckbox} 
           authorized={authorized} 
           handleLogin={handleLogin}
-        />
-      ) : (
-        <RegistrationPage 
+          userExist={userExist}
+          handleRegistration={handleRegistration}
+      />
+      ) : !userExist && (
+        <PageAfterLogin authorized={authorized} handleExit={handleExit} />
+      )}
+      {userExist && (<RegistrationPage 
           user={user} 
           handleUserInput={handleUserInput} 
           onRegistrationSubmit={onRegistrationSubmit} 
           reqistrationSuccess={reqistrationSuccess} 
-        />
-      )}
-      {console.log(user)}
-      {console.log(users)}
+          handleAfterRegistration={handleAfterRegistration}
+        />)}
     </>
   )
 }
