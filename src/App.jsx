@@ -9,60 +9,74 @@ function App() {
   const [password, setPassword] = useState('')
   const [checkbox, setCheckbox] = useState(false)
   const [authorized, setAuthorized] = useState(false)
+  const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
   const [reqistrationSuccess, setReqistrationSuccess] = useState(false)
-  const [name, setName] = useState('')
+  const [userExist, setUserExist] = useState(true)
   
   function handleLogin(e) {
     e.preventDefault()
-  /*   if (users.length === 0) {
-      return alert('Пользователя не сущесвует, пожалуйста зарегисрируйтесь')
-    } */
-    setAuthorized(!authorized)
-    setEmail('')
-    setPassword('')
-    setCheckbox(!checkbox)
+    let userExists = false;
+    function checkUserExist(users, email, password) {
+      userExists = users.some(user => user.email === email && user.password === password);
+      if (!userExists) {
+        alert('Пользователя не существует, проверьте данные или зарегистрируйтесь');
+      }
+    }
+    
+    checkUserExist(users, email, password)
+    
+    if (userExists) {
+      setAuthorized(true);
+      setEmail('');
+      setPassword('');
+      setCheckbox(false);
+    }
   }
 
   function handleExit() {
-    setAuthorized(!authorized)
+    setAuthorized(false)
   }
 
-  function onRegisterSubmit(e) {
+  function handleUserInput({ target }) {
+    const { name, value } = target;
+    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+  }
+
+  function onRegistrationSubmit(e) {
     e.preventDefault()
-    const newUser = {
-      name,
-      email,
-      password
+    if (user.password !== user.confirmPassword) {
+      return alert('Пароли не совпадают')
     }
-
-    setUsers(prev => [...prev, newUser])
-
-    setName('');
-    setEmail('');
-    setPassword('');
-    setReqistrationSuccess(!reqistrationSuccess)
+    setUsers(prevUsers => [...prevUsers, user])
+    setReqistrationSuccess(true)
   }
 
   return (
     <>
-    {!authorized ? (
-      <LoginPage 
-      email={email} 
-      setEmail={setEmail}
-      password={password} 
-      setPassword={setPassword}
-      checkbox={checkbox}
-      setCheckbox={setCheckbox} 
-      authorized={authorized} 
-      handleLogin={handleLogin}
-    />) : authorized ? (
-      <PageAfterLogin authorized={authorized} handleExit={handleExit} />
-    ) : !users && (
-      <>
-        <RegistrationPage />
-      </>
-    )}
+      {authorized ? (
+        <PageAfterLogin authorized={authorized} handleExit={handleExit} />
+      ) : userExist ? (
+        <LoginPage 
+          email={email} 
+          setEmail={setEmail}
+          password={password} 
+          setPassword={setPassword}
+          checkbox={checkbox}
+          setCheckbox={setCheckbox} 
+          authorized={authorized} 
+          handleLogin={handleLogin}
+        />
+      ) : (
+        <RegistrationPage 
+          user={user} 
+          handleUserInput={handleUserInput} 
+          onRegistrationSubmit={onRegistrationSubmit} 
+          reqistrationSuccess={reqistrationSuccess} 
+        />
+      )}
+      {console.log(user)}
+      {console.log(users)}
     </>
   )
 }

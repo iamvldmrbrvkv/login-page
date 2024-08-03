@@ -44,8 +44,8 @@ export default function LoginPage({
       <input
         name='checkbox'
         type='checkbox'
-        value={checkbox}
-        onChange={e => setCheckbox(e.target.value)}
+        checked={checkbox}
+        onChange={e => setCheckbox(e.target.checked)}
       />
       <span>Запомнить меня на этом компьютере</span>
       <button type="submit" >

@@ -1,38 +1,17 @@
 import { useState } from "react"
 
-export default function RegistrationPage() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [users, setUsers] = useState([])
-  const [reqistrationSuccess, setReqistrationSuccess] = useState(false)
+export default function RegistrationPage({ user, handleUserInput, onRegistrationSubmit, reqistrationSuccess }) {
   
-  function onSubmit(e) {
-    e.preventDefault()
-    const newUser = {
-      name,
-      email,
-      password
-    }
-
-    setUsers(prev => [...prev, newUser])
-
-    setName('');
-    setEmail('');
-    setPassword('');
-    setReqistrationSuccess(!reqistrationSuccess)
-  }
-
   return (
     <>
       {!reqistrationSuccess ? (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onRegistrationSubmit}>
         <label>
           <input
             name="name"
             type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={user.name || ''}
+            onChange={handleUserInput}
             required
             placeholder="Введите ваше имя"
           />
@@ -42,8 +21,8 @@ export default function RegistrationPage() {
           <input
             name="email"
             type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={user.email || ''}
+            onChange={handleUserInput}
             required
             placeholder="Введите ваш email"
           />
@@ -53,8 +32,8 @@ export default function RegistrationPage() {
           <input
             name="password"
             type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            value={user.password || ''}
+            onChange={handleUserInput}
             // pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
             required
             minLength="1"
@@ -63,12 +42,29 @@ export default function RegistrationPage() {
           />
         </label>
         <br />
-        <button type="submit" value="Войти" >
+        <label>
+          <input
+            name="confirmPassword"
+            type="password"
+            value={user.confirmPassword || ''}
+            onChange={handleUserInput}
+            // pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
+            required
+            minLength="1"
+            maxLength="11"
+            placeholder="Подтвердите пароль:"
+          />
+        </label>
+        <br />
+        <button type="submit" >
           Зарегистрироваться
         </button>
       </form>) : (
         <>
           <h2>Вы успешно создали аккаунт</h2>
+          <button>
+            Войти
+          </button>
         </>)}
     </>
   )
