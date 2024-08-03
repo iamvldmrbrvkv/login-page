@@ -2,13 +2,13 @@ export default function RegistrationPage({
   user, 
   handleUserInput, 
   onRegistrationSubmit, 
-  reqistrationSuccess, 
+  registrationSuccess, 
   handleAfterRegistration
 }) {
   
   return (
     <>
-      {!reqistrationSuccess ? (
+      {!registrationSuccess ? (
         <>
         <h2>Введите необходимые поля</h2>
         <form onSubmit={onRegistrationSubmit}>
@@ -18,8 +18,10 @@ export default function RegistrationPage({
             type="text"
             value={user.name || ''}
             onChange={handleUserInput}
+            pattern="^[А-Яа-яЁё\s]+$"
             required
             placeholder="Введите ваше имя"
+            title="Имя должно содержать только русские буквы и пробелы"
           />
         </label>
         <br />

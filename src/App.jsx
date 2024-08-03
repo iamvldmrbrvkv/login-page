@@ -11,8 +11,9 @@ function App() {
   const [authorized, setAuthorized] = useState(false)
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
-  const [reqistrationSuccess, setReqistrationSuccess] = useState(false)
+  const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const [userExist, setUserExist] = useState(false)
+  const [forgotPassword, setForgotPassword] = useState(false)
   
   function handleLogin(e) {
     e.preventDefault()
@@ -35,7 +36,10 @@ function App() {
   }
 
   function handleRegistration() {
-    setUserExist(!userExist)
+    setUserExist(true)
+    setEmail('');
+    setPassword('');
+    setCheckbox(false);
   }
 
   function handleExit() {
@@ -49,16 +53,33 @@ function App() {
 
   function onRegistrationSubmit(e) {
     e.preventDefault()
+    if (users.some((u) => u.email === user.email)) {
+      return alert('Пользователь с таким email уже существует')
+    }
     if (user.password !== user.confirmPassword) {
       return alert('Пароли не совпадают')
     }
     setUsers(prevUsers => [...prevUsers, user])
-    setReqistrationSuccess(true)
+    setRegistrationSuccess(true)
   }
 
   function handleAfterRegistration() {
-    setAuthorized(!authorized)
-    setUserExist(!authorized)
+    setAuthorized(false)
+    setUserExist(false)
+    setRegistrationSuccess(false)
+    setUser({})
+  }
+
+  function handleForgotPassword(e) {
+    e.preventDefault()
+    setForgotPassword(true)
+  }
+
+  function handleForgotPasswordSubmit(e) {
+    e.preventDefault()
+    alert(`Письмо с инструкциями по восстановлению пароля выслано на почту ${email}`)
+    setForgotPassword(false)
+    setEmail('')
   }
 
   return (
@@ -75,6 +96,9 @@ function App() {
           handleLogin={handleLogin}
           userExist={userExist}
           handleRegistration={handleRegistration}
+          handleForgotPassword={handleForgotPassword}
+          forgotPassword={forgotPassword}
+          handleForgotPasswordSubmit={handleForgotPasswordSubmit}
       />
       ) : !userExist && (
         <PageAfterLogin authorized={authorized} handleExit={handleExit} />
@@ -83,7 +107,7 @@ function App() {
           user={user} 
           handleUserInput={handleUserInput} 
           onRegistrationSubmit={onRegistrationSubmit} 
-          reqistrationSuccess={reqistrationSuccess} 
+          registrationSuccess={registrationSuccess} 
           handleAfterRegistration={handleAfterRegistration}
         />)}
     </>

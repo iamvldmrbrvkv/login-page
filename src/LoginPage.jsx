@@ -1,4 +1,5 @@
 import PageAfterLogin from "./PageAfterLogin";
+import ForgotPasswordPage from "./ForgotPasswordPage";
 
 export default function LoginPage({
   email, 
@@ -10,11 +11,14 @@ export default function LoginPage({
   authorized, 
   handleLogin,
   handleRegistration,
-  userExist
+  userExist,
+  handleForgotPassword,
+  forgotPassword,
+  handleForgotPasswordSubmit
 }) {
   return (
     <>
-    {!authorized ? <><h1>Лучший в мире сайт</h1>
+    {!authorized && !forgotPassword ? <><h1>Лучший в мире сайт</h1>
     <p>Пожалуйста, авторизуйтесь</p>
     <form onSubmit={handleLogin}>
       <label>
@@ -49,6 +53,8 @@ export default function LoginPage({
         onChange={e => setCheckbox(e.target.checked)}
       />
       <span>Запомнить меня на этом компьютере</span>
+      <br />
+      <a href="#" onClick={handleForgotPassword}>Забыли пароль?</a>
       <button type="submit" >
         Войти
       </button>
@@ -56,7 +62,8 @@ export default function LoginPage({
         Зарегистрироваться
       </button>
     </form>
-    </> : !userExist && <PageAfterLogin handleClick={handleLogin}/>}
+    </> : !userExist && !forgotPassword && <PageAfterLogin handleClick={handleLogin}/>}
+    {forgotPassword && <ForgotPasswordPage email={email} setEmail={setEmail} forgotPassword={forgotPassword} handleForgotPasswordSubmit={handleForgotPasswordSubmit} />}
   </>
   )
 }
