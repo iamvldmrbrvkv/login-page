@@ -15,25 +15,19 @@ function App() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const [userExist, setUserExist] = useState(true)
   const [forgotPassword, setForgotPassword] = useState(false)
+  const [registeredUserName, setRegisteredUserName] = useState('')
   
   function handleLogin(e) {
     e.preventDefault()
-    let userExists = false;
-    function checkUserExist(users, email, password) {
-      userExists = users.some(user => user.email === email && user.password === password);
-      if (!userExists) {
-        alert('Пользователя не существует, проверьте данные или зарегистрируйтесь');
-      }
+    const loggedInUser = users.find(user => user.email === email && user.password === password)
+    if (!loggedInUser) {
+      return alert('Пользователя не существует, проверьте данные или зарегистрируйтесь')
     }
-    
-    checkUserExist(users, email, password)
-    
-    if (userExists) {
-      setAuthorized(true);
-      setEmail('');
-      setPassword('');
-      setCheckbox(false);
-    }
+    setAuthorized(true)
+    setUser(loggedInUser)
+    setEmail('')
+    setPassword('')
+    setCheckbox(false)
   }
 
   function handleRegistration() {
@@ -45,6 +39,7 @@ function App() {
 
   function handleExit() {
     setAuthorized(false)
+    setUser({})
   }
 
   function handleUserInput({ target }) {
@@ -61,7 +56,9 @@ function App() {
       return alert('Пароли не совпадают')
     }
     setUsers(prevUsers => [...prevUsers, user])
+    setRegisteredUserName(user.name)
     setRegistrationSuccess(true)
+    setUser({})
   }
 
   function handleAfterRegistration() {
@@ -104,7 +101,7 @@ function App() {
         />
       )}
       {authorized && (
-        <PageAfterLogin handleExit={handleExit} />
+        <PageAfterLogin handleExit={handleExit} user={user} />
       )}
       {forgotPassword && (
         <ForgotPasswordPage 
@@ -121,6 +118,7 @@ function App() {
           onRegistrationSubmit={onRegistrationSubmit} 
           registrationSuccess={registrationSuccess} 
           handleAfterRegistration={handleAfterRegistration}
+          registeredUserName={registeredUserName}
         />
       )}
     </div>

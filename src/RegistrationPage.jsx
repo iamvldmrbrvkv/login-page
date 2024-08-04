@@ -3,7 +3,8 @@ export default function RegistrationPage({
   handleUserInput, 
   onRegistrationSubmit, 
   registrationSuccess, 
-  handleAfterRegistration
+  handleAfterRegistration,
+  registeredUserName
 }) {
   return (
     <>
@@ -67,7 +68,7 @@ export default function RegistrationPage({
       )}
       {registrationSuccess && (
         <>
-          <h2>Регистрация прошла успешно!</h2>
+          <h2>{registeredUserName}, регистрация прошла успешно!</h2>
           <button onClick={handleAfterRegistration}>Вернуться к входу</button>
         </>
       )}
