@@ -2,7 +2,7 @@
 export default function ForgotPasswordPage({ email, setEmail, handleForgotPasswordSubmit }) {
   return (
     <>
-      <h2>Для восстановления пароля введите ваш email</h2>
+      <h2>Для восстановления пароля введите email</h2>
       <form onSubmit={handleForgotPasswordSubmit}>
         <label>
           <input
