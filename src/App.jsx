@@ -72,8 +72,9 @@ function App() {
   function handleForgotPassword(e) {
     e.preventDefault()
     setForgotPassword(true)
-    setEmail('')
-    setPassword('')
+    setEmail('');
+    setPassword('');
+    setCheckbox(false);
   }
 
   function handleForgotPasswordSubmit(e) {
