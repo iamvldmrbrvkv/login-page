@@ -7,7 +7,7 @@ export default function RegistrationPage({
 }) {
   return (
     <>
-      {!registrationSuccess ? (
+      {!registrationSuccess && (
         <>
           <h2>Заполните необходимые поля</h2>
           <form onSubmit={onRegistrationSubmit}>
@@ -61,10 +61,11 @@ export default function RegistrationPage({
               />
               <i className="fa fa-lock"></i>
             </label>
-            <button type="submit">Зарегистрироваться</button>
+            <button type="submit">Подтвердить регистрацию</button>
           </form>
         </>
-      ) : (
+      )}
+      {registrationSuccess && (
         <>
           <h2>Регистрация прошла успешно!</h2>
           <button onClick={handleAfterRegistration}>Вернуться к входу</button>

@@ -1,6 +1,3 @@
-import PageAfterLogin from "./PageAfterLogin";
-import ForgotPasswordPage from "./ForgotPasswordPage";
-
 export default function LoginPage({
   email, 
   setEmail,
@@ -8,17 +5,13 @@ export default function LoginPage({
   setPassword,
   checkbox, 
   setCheckbox,
-  authorized, 
   handleLogin,
   handleRegistration,
-  userExist,
   handleForgotPassword,
-  forgotPassword,
-  handleForgotPasswordSubmit
 }) {
   return (
     <>
-      {!authorized && !forgotPassword ? (
+      {(
         <>
           <h1>Очень хороший сайт</h1>
           <p>Пожалуйста, авторизуйтесь</p>
@@ -61,16 +54,6 @@ export default function LoginPage({
             <button type="button" onClick={handleRegistration}>Зарегистрироваться</button>
           </form>
         </>
-      ) : !userExist && !forgotPassword && (
-        <PageAfterLogin handleClick={handleLogin}/>
-      )}
-      {forgotPassword && (
-        <ForgotPasswordPage 
-          email={email} 
-          setEmail={setEmail} 
-          forgotPassword={forgotPassword} 
-          handleForgotPasswordSubmit={handleForgotPasswordSubmit} 
-        />
       )}
     </>
   )

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import LoginPage from './LoginPage'
 import RegistrationPage from './RegistrationPage'
 import PageAfterLogin from './PageAfterLogin'
+import ForgotPasswordPage from './ForgotPasswordPage'
 
 function App() {
   const [email, setEmail] = useState('')
@@ -12,7 +13,7 @@ function App() {
   const [user, setUser] = useState({})
   const [users, setUsers] = useState([])
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
-  const [userExist, setUserExist] = useState(false)
+  const [userExist, setUserExist] = useState(true)
   const [forgotPassword, setForgotPassword] = useState(false)
   
   function handleLogin(e) {
@@ -36,7 +37,7 @@ function App() {
   }
 
   function handleRegistration() {
-    setUserExist(true)
+    setUserExist(false)
     setEmail('');
     setPassword('');
     setCheckbox(false);
@@ -65,8 +66,9 @@ function App() {
 
   function handleAfterRegistration() {
     setAuthorized(false)
-    setUserExist(false)
     setRegistrationSuccess(false)
+    setForgotPassword(false)
+    setUserExist(true)
     setUser({})
   }
 
@@ -84,7 +86,7 @@ function App() {
 
   return (
     <div className="App">
-      {!authorized && !userExist ? (
+      {!authorized && !registrationSuccess && !forgotPassword && userExist && (
         <LoginPage 
           email={email} 
           setEmail={setEmail}
@@ -100,10 +102,19 @@ function App() {
           forgotPassword={forgotPassword}
           handleForgotPasswordSubmit={handleForgotPasswordSubmit}
         />
-      ) : !userExist && (
-        <PageAfterLogin authorized={authorized} handleExit={handleExit} />
       )}
-      {userExist && (
+      {authorized && (
+        <PageAfterLogin handleExit={handleExit} />
+      )}
+      {forgotPassword && (
+        <ForgotPasswordPage 
+          email={email} 
+          setEmail={setEmail} 
+          forgotPassword={forgotPassword} 
+          handleForgotPasswordSubmit={handleForgotPasswordSubmit} 
+        />
+      )}
+      {!userExist && (
         <RegistrationPage 
           user={user} 
           handleUserInput={handleUserInput} 
