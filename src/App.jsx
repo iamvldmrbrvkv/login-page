@@ -83,7 +83,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className="App">
       {!authorized && !userExist ? (
         <LoginPage 
           email={email} 
@@ -99,18 +99,20 @@ function App() {
           handleForgotPassword={handleForgotPassword}
           forgotPassword={forgotPassword}
           handleForgotPasswordSubmit={handleForgotPasswordSubmit}
-      />
+        />
       ) : !userExist && (
         <PageAfterLogin authorized={authorized} handleExit={handleExit} />
       )}
-      {userExist && (<RegistrationPage 
+      {userExist && (
+        <RegistrationPage 
           user={user} 
           handleUserInput={handleUserInput} 
           onRegistrationSubmit={onRegistrationSubmit} 
           registrationSuccess={registrationSuccess} 
           handleAfterRegistration={handleAfterRegistration}
-        />)}
-    </>
+        />
+      )}
+    </div>
   )
 }
 
