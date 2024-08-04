@@ -10,7 +10,7 @@ export default function RegistrationPage({
     <>
       {!registrationSuccess ? (
         <>
-        <h2>Введите необходимые поля</h2>
+        <h2>Заполните необходимые поля</h2>
         <form onSubmit={onRegistrationSubmit}>
         <label>
           <input
@@ -20,7 +20,7 @@ export default function RegistrationPage({
             onChange={handleUserInput}
             pattern="^[А-Яа-яЁё\s]+$"
             required
-            placeholder="Введите ваше имя"
+            placeholder="Ваше имя:"
             title="Имя должно содержать только русские буквы и пробелы"
           />
         </label>
@@ -32,7 +32,7 @@ export default function RegistrationPage({
             value={user.email || ''}
             onChange={handleUserInput}
             required
-            placeholder="Введите ваш email"
+            placeholder="Ваш email:"
           />
         </label>
       <br />
@@ -42,7 +42,6 @@ export default function RegistrationPage({
             type="password"
             value={user.password || ''}
             onChange={handleUserInput}
-            // pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
             required
             minLength="1"
             maxLength="11"
@@ -56,7 +55,6 @@ export default function RegistrationPage({
             type="password"
             value={user.confirmPassword || ''}
             onChange={handleUserInput}
-            // pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
             required
             minLength="1"
             maxLength="11"

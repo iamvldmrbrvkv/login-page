@@ -11,7 +11,7 @@ export default function ForgotPasswordPage({ email, setEmail, handleForgotPasswo
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                placeholder="ваш email"
+                placeholder="Ваш email:"
             />
         </label>
         <br />

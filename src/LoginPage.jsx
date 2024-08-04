@@ -58,6 +58,7 @@ export default function LoginPage({
       <button type="submit" >
         Войти
       </button>
+      <br />
       <button onClick={handleRegistration} >
         Зарегистрироваться
       </button>
